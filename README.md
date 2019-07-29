@@ -1,4 +1,4 @@
-#Proposal
+# Proposal
 
 # What problem does this app solve?
 Service workers often face challenges collecting tips from customers. Keeping track and sharing amongst colleagues can be overwhelming.

@@ -1,0 +1,24 @@
+{
+  "name": "tips-ease",
+  "version": "1.0.0",
+  "description": "Lambda Build week #3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Haja-andri/TipsEase.git"
+  },
+  "author": "Haja Andriamaro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Haja-andri/TipsEase/issues"
+  },
+  "homepage": "https://github.com/Haja-andri/TipsEase#readme",
+  "dependencies": {
+    "knex": "^0.19.1",
+    "sqlite3": "^4.0.9",
+    "xpress": "^2.4.6"
+  }
+}
