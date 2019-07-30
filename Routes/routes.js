@@ -1,6 +1,8 @@
 const Workers = require('../data/models/workersModel');
 const bcrypt = require('bcrypt');
-const token = require('../utils/token')
+const token = require('../utils/token');
+
+const { authenticate } = require('../utils/authenticate');
 
 module.exports = server => {
   // register a new worker
@@ -10,7 +12,7 @@ module.exports = server => {
   // get all workers from the DB
   server.get('/api/workers', getWorkers); 
   // get a worker account info
-  server.get('/api/workers/:id/accounts', getAccount); 
+  server.get('/api/workers/:id/accounts', authenticate, getAccount); 
 };
 
 async function register(req, res) {
