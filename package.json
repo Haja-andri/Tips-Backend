@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Haja-andri/TipsEase#readme",
   "dependencies": {
+    "cors": "^2.8.5",
+    "helmet": "^3.20.0",
     "knex": "^0.19.1",
     "sqlite3": "^4.0.9",
     "xpress": "^2.4.6"
