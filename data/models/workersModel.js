@@ -6,8 +6,10 @@ module.exports = {
     findById,
 };
 
-async function add(user) {
+async function add(workers) {
     // add workers
+    const [id] = await db('workers').insert(workers)
+    return findById(id);
 }
 
 function getAll() {
@@ -15,5 +17,5 @@ function getAll() {
 }
 
 function findById(id) {
-    // retuen a worker by its ID
+    return db('workers').where('workers.id', id)
 }
