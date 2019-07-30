@@ -10,7 +10,7 @@ module.exports = server => {
   // get all workers from the DB
   server.get('/api/workers', getWorkers); 
   // get a worker account info
-  server.get('/api/workers/:id/account', getWorkersAccount); 
+  server.get('/api/workers/:id/accounts', getAccount); 
 };
 
 async function register(req, res) {
@@ -90,6 +90,16 @@ async function getWorkers(req, res) {
     }
 }
 
-function getWorkersAccount(req, res) {
-    res.json('get get Workers Account enpoint');
+async function getAccount(req, res) {
+    const workerId = req.params.id;
+    try {
+        const account = await Workers.getWorkersAccount(workerId);
+        res.status(200).json(account);
+    } catch (error) {
+        const err = {
+            message: error.message,
+            stack: error.stack,
+        };
+        res.status(500).json(err);
+    }
 }

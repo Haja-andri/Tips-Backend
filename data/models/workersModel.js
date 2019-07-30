@@ -5,6 +5,7 @@ module.exports = {
     getAll,
     findById,
     findByFilter,
+    getWorkersAccount,
 };
 
 async function add(workers) {
@@ -23,4 +24,8 @@ function findById(id) {
 
 function findByFilter(filter) {
     return db('workers').where(filter);
+}
+
+function getWorkersAccount(id) {
+    return db('accounts').where('worker_id', id)
 }

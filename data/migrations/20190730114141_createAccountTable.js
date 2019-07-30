@@ -6,6 +6,9 @@ exports.up = function(knex) {
             .unsigned()
             .references('id')
             .inTable('workers')
+            // the worker_id refering to workers table mus be unique in 
+            // account to prevent having multiple account for a single worker
+            .unique() 
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
         accounts.string('iban', 128).notNullable().unique();
