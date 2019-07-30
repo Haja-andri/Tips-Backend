@@ -1,11 +1,12 @@
 const Workers = require('../data/models/workersModel');
 const bcrypt = require('bcrypt');
+const token = require('../utils/token')
 
 module.exports = server => {
   // register a new worker
   server.post('/api/workers', register); 
   // workers login
-  server.post('/api/worker/login', login); 
+  server.post('/api/workers/login', login); 
   // get all workers from the DB
   server.get('/api/workers', getWorkers); 
   // get a worker account info
@@ -50,7 +51,30 @@ async function register(req, res) {
 }
 
 function login(req, res) {
-    res.json('workers login enpoint');
+    // extract worker credential info
+    const { username, password } = req.body;
+      // in our case the username is the email of the worker
+    Workers.findByFilter({email: username})
+    .first()
+    .then( worker =>{
+        if (worker && bcrypt.compareSync(password, worker.password)) {
+            const newToken = token.generateToken(worker);
+            res.status(200).json({
+                message: `Welcome ${worker.name} ${worker.first_name}!`,
+                token: newToken
+            });
+        } 
+        else {
+            res.status(401).json({ message: 'Invalid Credentials' });
+        }
+    })
+    .catch(error =>{
+    const err = {
+        message: error.message,
+        stack: error.stack,
+    };
+        res.status(500).json(err);
+    });
 }
 
 async function getWorkers(req, res) {

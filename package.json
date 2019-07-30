@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "helmet": "^3.20.0",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.1",
     "sqlite3": "^4.0.9",
     "xpress": "^2.4.6"
