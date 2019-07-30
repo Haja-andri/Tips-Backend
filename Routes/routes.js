@@ -5,14 +5,14 @@ const token = require('../utils/token');
 const { authenticate } = require('../utils/authenticate');
 
 module.exports = server => {
-  // register a new worker
-  server.post('/api/workers', register); 
-  // workers login
-  server.post('/api/workers/login', login); 
-  // get all workers from the DB
-  server.get('/api/workers', getWorkers); 
-  // get a worker account info
-  server.get('/api/workers/:id/accounts', authenticate, getAccount); 
+    // register a new worker
+    server.post('/api/workers', register); 
+    // workers login
+    server.post('/api/workers/login', login); 
+    // get all workers from the DB
+    server.get('/api/workers', getWorkers); 
+    // get a worker account info
+    server.get('/api/workers/:id/accounts', authenticate, getAccount); 
 };
 
 async function register(req, res) {
@@ -45,7 +45,6 @@ async function register(req, res) {
         } catch (error) {
             const err = {
                 message: error.message,
-                stack: error.stack,
             };
             res.status(500).json(err);
         }    
@@ -73,7 +72,6 @@ function login(req, res) {
     .catch(error =>{
     const err = {
         message: error.message,
-        stack: error.stack,
     };
         res.status(500).json(err);
     });
@@ -86,7 +84,6 @@ async function getWorkers(req, res) {
     } catch (error) {
         const err = {
             message: error.message,
-            stack: error.stack,
         };
         res.status(500).json(err);
     }
@@ -100,7 +97,6 @@ async function getAccount(req, res) {
     } catch (error) {
         const err = {
             message: error.message,
-            stack: error.stack,
         };
         res.status(500).json(err);
     }

@@ -5,7 +5,7 @@ exports.up = function(knex) {
         payments.integer('customer_id').notNullable() // foreign key to customer table
             .unsigned()
             .references('id')
-            .inTable('cutomers')
+            .inTable('customers')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
         payments.integer('account_id').notNullable() // foreign key to accounts (workers acccount) table
