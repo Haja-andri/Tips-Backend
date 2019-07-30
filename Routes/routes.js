@@ -1,4 +1,4 @@
-// const Workers = require('../database/workersModel');
+const Workers = require('../data/models/workersModel');
 
 module.exports = server => {
   // register a new worker
@@ -19,8 +19,17 @@ function login(req, res) {
     res.json('workers login enpoint');
 }
 
-function getWorkers(req, res) {
-    res.json('get all workers enpoint');
+async function getWorkers(req, res) {
+    try {
+        const workers = await Workers.getAll();
+        res.status(200).json(workers);
+    } catch (error) {
+        const err = {
+            message: error.message,
+            stack: error.stack,
+        };
+        res.status(500).json(err);
+    }
 }
 
 function getWorkersAccount(req, res) {
