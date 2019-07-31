@@ -19,7 +19,8 @@ async function add(workers) {
 }
 
 function getAll() {
-    return db('workers');
+    //return all workers and related account including the ones that does not have an account yet
+    return db('workers').select('*').from('workers').leftJoin('accounts', 'workers.id', 'worker_id');
 }
 
 function findById(id) {
@@ -31,7 +32,8 @@ function findByFilter(filter) {
 }
 
 function getWorkersAccount(id) {
-    return db('accounts').where('worker_id', id)
+    //return all workers that has am account created with the account info
+    return db('accounts').select('*').from('workers').innerJoin('accounts', 'workers.id', 'worker_id');
 }
 
 async function insertWorkerToken(token){
