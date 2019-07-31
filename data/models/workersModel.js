@@ -45,7 +45,18 @@ function findByFilter(filter) {
 
 function getWorkersAccount(id) {
     //return all workers that has am account created with the account info
-    return db('accounts').select('*').from('workers').innerJoin('accounts', 'workers.id', 'worker_id');
+    return db('accounts').select('workers.id',
+    'workers.name',
+    'workers.first_name',
+    'workers.job_title',
+    'workers.mobile',
+    'workers.email',
+    'workers.photo',
+    'workers.start_date',
+    'workers.tagline',
+    'accounts.iban',
+    'accounts.balance',)
+    .from('workers').innerJoin('accounts', 'workers.id', 'worker_id');
 }
 
 async function insertWorkerToken(token){
