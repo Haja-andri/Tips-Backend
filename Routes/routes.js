@@ -107,7 +107,10 @@ async function getAccount(req, res) {
     const workerId = req.params.id;
     try {
         const account = await Workers.getWorkersAccount(workerId);
-        res.status(200).json(account);
+        if(account.length === 0){
+            res.status(200).json('There is no account yet associated to this profile, please add account to receive tips from cutomers');    
+        } 
+        else res.status(200).json(account);
     } catch (error) {
         const err = {
             message: error.message,
