@@ -5,8 +5,11 @@ const token = require('../utils/token');
 const { authenticate } = require('../utils/authenticate');
 
 module.exports = server => {
-    // register a new customer (optional)
+    // register a new customer (password optional)
     server.post('/api/customers', register); 
+    // add customer password (if customer want to be able to consult
+    // payments history and/or register his payment card)
+    server.post('/api/customers/:id/subscribe', subscribe); 
     // customer login (optional)
     server.post('/api/customers/login', login); 
     // get a customer payments history
@@ -46,28 +49,36 @@ async function register(req, res) {
     }
 }
 
-// workers login point to access sensitive data
-function login (req, res) {
-
-}
-
-// get the account that belong to a worker
-async function getPaymentsHistory(req, res) {
-    
-}
-
-async function logout (req, res){
-    const workerId = req.params.id;
+// customer login point to access sensitive data
+async function subscribe (req, res) {
+    const customer = {
+        // pasword encryption before storing
+        password: bcrypt.hashSync(req.body.password, 12),
+        id: req.params.id
+    }
     try {
-        await Workers.removeWorkerToken(workerId);
-        const workerData = await Workers.findById(workerId);
-        res.status(200).json(`See you next time ${workerData[0].name} ${workerData[0].first_name}`)
+        const updatedCustomer = await Customers.subsribe(customer);
+        res.status(200).json(updatedCustomer);
     } catch (error) {
         const err = {
             message: error.message,
         };
         res.status(500).json(err);
     }
+
+}
+
+// customer login point to access sensitive data
+function login (req, res) {
+
+}
+
+// get the payments history that belong to a customer
+async function getPaymentsHistory(req, res) {
+    
+}
+
+async function logout (req, res){
 }
 
 async function deleteCustomer (req, res) {
