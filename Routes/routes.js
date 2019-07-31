@@ -13,8 +13,11 @@ module.exports = server => {
     server.get('/api/workers', getWorkers); 
     // get a worker account info
     server.get('/api/workers/:id/accounts', authenticate, getAccount); 
+    // post a request for worker to logout
+    server.post('/api/workers/:id/logout', authenticate, logout); 
 };
 
+// workers registration 
 async function register(req, res) {
     const { 
         name, 
@@ -51,6 +54,7 @@ async function register(req, res) {
     }
 }
 
+// workers login point to access sensitive data
 function login (req, res) {
     // extract worker credential info
     const { username, password } = req.body;
@@ -91,6 +95,7 @@ function login (req, res) {
     });
 }
 
+// get the list of all workers
 async function getWorkers(req, res) {
     try {
         const workers = await Workers.getAll();
@@ -103,6 +108,7 @@ async function getWorkers(req, res) {
     }
 }
 
+// get the account that belong to a worker
 async function getAccount(req, res) {
     const workerId = req.params.id;
     try {
@@ -111,6 +117,20 @@ async function getAccount(req, res) {
             res.status(200).json('There is no account yet associated to this profile, please add account to receive tips from cutomers');    
         } 
         else res.status(200).json(account);
+    } catch (error) {
+        const err = {
+            message: error.message,
+        };
+        res.status(500).json(err);
+    }
+}
+
+async function logout (req, res){
+    const workerId = req.params.id;
+    try {
+        await Workers.removeWorkerToken(workerId);
+        const workerData = await Workers.findById(workerId);
+        res.status(200).json(`See you next time ${workerData[0].name} ${workerData[0].first_name}`)
     } catch (error) {
         const err = {
             message: error.message,

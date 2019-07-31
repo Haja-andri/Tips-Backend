@@ -9,6 +9,7 @@ module.exports = {
     insertWorkerToken,
     updateWorkerToken,
     findTokenByWorkerId,
+    removeWorkerToken,
 };
 
 async function add(workers) {
@@ -43,4 +44,8 @@ async function updateWorkerToken(updatedToken){
 
 function findTokenByWorkerId(id) {
     return db('workers_token').where('worker_id', id)
+}
+
+function removeWorkerToken(id){
+    return db('workers_token').delete('worker_id', id)
 }
