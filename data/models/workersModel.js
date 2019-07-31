@@ -5,13 +5,13 @@ module.exports = {
     getAll,
     findById,
     findByFilter,
-    getWorkersAccount,
     insertWorkerToken,
     updateWorkerToken,
     findTokenByWorkerId,
     findWorkerWithAccountById,
     removeWorkerToken,
     deleteWorker,
+    findAccountPaymentHistory,
 };
 
 async function add(workers) {
@@ -32,7 +32,7 @@ function getAll() {
         'workers.photo',
         'workers.start_date',
         'workers.tagline',
-        'accounts.balance',)
+        'accounts.balance')
         .from('workers').leftJoin('accounts', 'workers.id', 'worker_id');
 }
 
@@ -42,9 +42,20 @@ function findWorkerWithAccountById(id) {
         'workers.first_name',
         'workers.mobile',
         'workers.email',
-        'accounts.balance',)
-    .from('workers').innerJoin('accounts', 'workers.id', 'worker_id' )
+        'accounts.balance',
+        'accounts.id',)
+    .from('workers').join('accounts', 'workers.id', 'worker_id' )
     .where('workers.id', id);
+}
+
+function findAccountPaymentHistory(accountId) {
+    return db('payments').select(
+        'payments.amount',
+        'payments.created_at',
+        'customers.name',
+        'customers.first_name')
+    .from('payments').join('customers', 'customers.id', 'payments.customer_id' )
+    .where('account_id', accountId);
 }
 
 function findById(id) {
@@ -53,18 +64,6 @@ function findById(id) {
 
 function findByFilter(filter) {
     return db('workers').where(filter);
-}
-
-function getWorkersAccount() {
-    //return all workers that has am account created with the account info
-    return db('accounts').select(
-        'workers.name',
-        'workers.first_name',
-        'workers.mobile',
-        'workers.email',
-        'accounts.iban',
-        'accounts.balance',)
-    .from('workers').innerJoin('accounts', 'workers.id', 'worker_id');
 }
 
 async function insertWorkerToken(token){
@@ -87,5 +86,10 @@ function removeWorkerToken(id){
 // cascade down to account deletion
 // deletion is denied if account balance > 0
 function deleteWorker(id){
+    return db('workers').del().where('workers.id', id)
+}
+
+// get payments history for a given worker account
+function getPaymentsHistory(id){
     return db('workers').del().where('workers.id', id)
 }

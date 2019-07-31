@@ -11,7 +11,7 @@ module.exports = server => {
     server.post('/api/workers/login', login); 
     // get all workers from the DB
     server.get('/api/workers', getWorkers); 
-    // get a worker account info
+    // get a worker account info including payments history
     server.get('/api/workers/:id/accounts', authenticate, getAccount); 
     // post a request for worker to logout
     server.post('/api/workers/:id/logout', authenticate, logout); 
@@ -116,11 +116,14 @@ async function getWorkers(req, res) {
 async function getAccount(req, res) {
     const workerId = req.params.id;
     try {
-        const account = await Workers.getWorkersAccount(workerId);
+        const account = await Workers.findWorkerWithAccountById(workerId);
         if(account.length === 0){
             res.status(200).json('There is no account yet associated to this profile, please add account to receive tips from cutomers');    
         } 
-        else res.status(200).json(account);
+        else {
+            account[0].tips_history = await Workers.findAccountPaymentHistory(account[0].id);
+            res.status(200).json(account);    
+        }
     } catch (error) {
         const err = {
             message: error.message,
