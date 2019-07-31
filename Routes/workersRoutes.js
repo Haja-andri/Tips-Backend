@@ -18,7 +18,7 @@ module.exports = server => {
     // delete a worker profile
     server.delete('/api/workers/:id/delete', deleteWorker);
 
-    // updating workers profile to be implemented
+    // create accounts and create payments endpoints to be implemented
 };
 
 // workers registration 
