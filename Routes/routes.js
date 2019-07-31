@@ -15,8 +15,10 @@ module.exports = server => {
     server.get('/api/workers/:id/accounts', authenticate, getAccount); 
     // post a request for worker to logout
     server.post('/api/workers/:id/logout', authenticate, logout); 
+    // delete a worker profile
+    server.delete('/api/workers/:id/delete', deleteWorker);
 
-    // updating and deleting workers profile to be implemented
+    // updating workers profile to be implemented
 };
 
 // workers registration 
@@ -133,6 +135,32 @@ async function logout (req, res){
         await Workers.removeWorkerToken(workerId);
         const workerData = await Workers.findById(workerId);
         res.status(200).json(`See you next time ${workerData[0].name} ${workerData[0].first_name}`)
+    } catch (error) {
+        const err = {
+            message: error.message,
+        };
+        res.status(500).json(err);
+    }
+}
+
+async function deleteWorker (req, res) {
+    const workerId = req.params.id;
+    try {
+        const workerToDelete = await Workers.findWorkerWithAccountById(workerId); 
+        if(workerToDelete.length > 0){
+            // there is an account associated with the worker
+            // we make sure the balance = 0, otherwise reject delete until 
+            // balance = 0
+            if(workerToDelete[0].balance > 0){
+                res.status(401).json({error: 'You still have money on your account, please withdraw the balance before proceeding'});   
+            }
+            else{
+                // delete the worker cascaded down to associated account (if any)
+                await Workers.deleteWorker(workerId);
+                res.status(200).json('Your profile has been deleted')
+            }
+        }
+        else res.status(401).json({error: 'could not find the worker'});
     } catch (error) {
         const err = {
             message: error.message,
