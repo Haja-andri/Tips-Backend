@@ -15,6 +15,8 @@ module.exports = server => {
     server.get('/api/workers/:id/accounts', authenticate, getAccount); 
     // post a request for worker to logout
     server.post('/api/workers/:id/logout', authenticate, logout); 
+
+    // updating and deleting workers profile to be implemented
 };
 
 // workers registration 

@@ -20,7 +20,19 @@ async function add(workers) {
 
 function getAll() {
     //return all workers and related account including the ones that does not have an account yet
-    return db('workers').select('*').from('workers').leftJoin('accounts', 'workers.id', 'worker_id');
+    return db('workers').select(
+        'workers.id',
+        'workers.name',
+        'workers.first_name',
+        'workers.job_title',
+        'workers.mobile',
+        'workers.email',
+        'workers.photo',
+        'workers.start_date',
+        'workers.tagline',
+        'accounts.iban',
+        'accounts.balance',)
+        .from('workers').leftJoin('accounts', 'workers.id', 'worker_id');
 }
 
 function findById(id) {
