@@ -51,15 +51,29 @@ async function register(req, res) {
     }
 }
 
-function login(req, res) {
+function login (req, res) {
     // extract worker credential info
     const { username, password } = req.body;
       // in our case the username is the email of the worker
     Workers.findByFilter({email: username})
     .first()
-    .then( worker =>{
+    .then( async (worker) =>{
         if (worker && bcrypt.compareSync(password, worker.password)) {
+            // we generate a token for futur access
             const newToken = token.generateToken(worker);
+            // we insert an entry in the workers_token table
+            const workerToken = {
+                worker_id: worker.id, 
+                token:newToken
+            };
+            // we check if there is already a token
+            const alreadyAToken = await Workers.findTokenByWorkerId(workerToken.worker_id);
+            if(alreadyAToken.length > 0){
+                // a token is already set for this worker, we update it
+                Workers.updateWorkerToken(workerToken)
+            }
+            // insert a new token
+            else await Workers.insertWorkerToken(workerToken);
             res.status(200).json({
                 message: `Welcome ${worker.name} ${worker.first_name}!`,
                 token: newToken

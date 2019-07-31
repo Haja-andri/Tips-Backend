@@ -6,6 +6,9 @@ module.exports = {
     findById,
     findByFilter,
     getWorkersAccount,
+    insertWorkerToken,
+    updateWorkerToken,
+    findTokenByWorkerId,
 };
 
 async function add(workers) {
@@ -28,4 +31,16 @@ function findByFilter(filter) {
 
 function getWorkersAccount(id) {
     return db('accounts').where('worker_id', id)
+}
+
+async function insertWorkerToken(token){
+    return await db('workers_token').insert(token)
+}
+
+async function updateWorkerToken(updatedToken){
+    return await db('workers_token').update('token', updatedToken.token).where('worker_id', updatedToken.worker_id )
+}
+
+function findTokenByWorkerId(id) {
+    return db('workers_token').where('worker_id', id)
 }
