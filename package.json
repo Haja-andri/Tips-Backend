@@ -20,12 +20,6 @@
     "url": "https://github.com/Haja-andri/TipsEase/issues"
   },
   "homepage": "https://github.com/Haja-andri/TipsEase#readme",
-  "devDependencies": {
-    "cross-env": "^5.2.0",
-    "jest": "^24.8.0",
-    "nodemon": "^1.19.1",
-    "supertest": "^4.0.2"
-  },
   "dependencies": {
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
