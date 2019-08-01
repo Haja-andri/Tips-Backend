@@ -41,9 +41,9 @@ Target Audience
 
 This is the back-end for the I'll serve soup, which is part of Lambda School Build Week Project.
 
-<p align="center">
+<div width="100%">
   <img src="schema.png" width="190" alt="I'll serve soup">
-</p>
+</div>
 
 # Instructions
 
