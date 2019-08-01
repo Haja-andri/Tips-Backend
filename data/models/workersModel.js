@@ -12,6 +12,7 @@ module.exports = {
     removeWorkerToken,
     deleteWorker,
     findAccountPaymentHistory,
+    createAccount
 };
 
 async function add(workers) {
@@ -42,6 +43,7 @@ function findWorkerWithAccountById(id) {
         'workers.first_name',
         'workers.mobile',
         'workers.email',
+        'accounts.iban',
         'accounts.balance',
         'accounts.id',)
     .from('workers').join('accounts', 'workers.id', 'worker_id' )
@@ -89,7 +91,8 @@ function deleteWorker(id){
     return db('workers').del().where('workers.id', id)
 }
 
-// get payments history for a given worker account
-function getPaymentsHistory(id){
-    return db('workers').del().where('workers.id', id)
+async function createAccount(workersAccount){
+    const[id] = await db('accounts').insert(workersAccount);
+    return findWorkerWithAccountById(workersAccount.worker_id);
 }
+

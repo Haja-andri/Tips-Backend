@@ -23,7 +23,8 @@ module.exports = server => {
     // delete a worker profile
     server.delete('/api/workers/:id/delete', deleteWorker);
 
-    // create accounts and create payments endpoints to be implemented
+    // create an account for worker
+    server.post('/api/workers/:id/accounts', setProfileToWorker, authenticate, createAccount);
 };
 
 // workers registration 
@@ -169,6 +170,24 @@ async function deleteWorker (req, res) {
             }
         }
         else res.status(401).json({error: 'could not find the worker'});
+    } catch (error) {
+        const err = {
+            message: error.message,
+        };
+        res.status(500).json(err);
+    }
+}
+
+// create an account for a worker
+async function createAccount (req, res) {
+    const workerAccount = {
+        worker_id: req.params.id,
+        iban: req.body.iban,
+        balance: '0' // defaulted to 0 at creation
+    }
+    try {
+        const createdAccount = await Workers.createAccount(workerAccount);
+        res.status(200).json(createdAccount);
     } catch (error) {
         const err = {
             message: error.message,
