@@ -7,7 +7,8 @@ const jwtKey = process.env.SALT;
 // quickly see what this file exports
 module.exports = {
     authenticate,
-    setProfileToCustomer
+    setProfileToCustomer,
+    setProfileToWorker
 };
 
 // Function used by protected endpoints before procession futher
@@ -28,7 +29,7 @@ function authenticate(req, res, next) {
         if(req.profile === 'customer') {
             alreadyAToken = await Customers.findTokenByCustomerId(req.params.id);
         }
-        else {
+        else if (req.profile === 'worker') {
             alreadyAToken = await Workers.findTokenByWorkerId(req.params.id);
         } 
         if(alreadyAToken.length > 0 && token === alreadyAToken[0].token){
@@ -50,5 +51,10 @@ function authenticate(req, res, next) {
 
 function setProfileToCustomer (req, res, next){
     req.profile = 'customer';
+    next();
+}
+
+function setProfileToWorker (req, res, next) {
+    req.profile = 'worker';
     next();
 }

@@ -8,7 +8,8 @@ module.exports = {
     findTokenByCustomerId,
     updateCustomerToken,
     insertCustomerToken,
-    getPaymentsHistory
+    getPaymentsHistory,
+    removeCustomerToken
 };
 
 async function add(customers) {
@@ -44,4 +45,8 @@ async function insertCustomerToken(token){
 
 async function getPaymentsHistory(customerId){
     return await db('payments').select('amount', 'created_at').where('payments.id', customerId);
+}
+
+function removeCustomerToken(id){
+    return db('customers_token').del().where('customer_id', id)
 }

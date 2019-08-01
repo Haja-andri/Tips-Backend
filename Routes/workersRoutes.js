@@ -2,7 +2,7 @@ const Workers = require('../data/models/workersModel');
 const bcrypt = require('bcrypt');
 const token = require('../utils/token');
 
-const { authenticate } = require('../utils/authenticate');
+const { setProfileToWorker, authenticate } = require('../utils/authenticate');
 
 module.exports = server => {
     // register a new worker
@@ -15,11 +15,11 @@ module.exports = server => {
     server.get('/api/workers', getWorkers); 
 
     // get a worker account info including payments history
-    server.get('/api/workers/:id/accounts', authenticate, getAccount); 
+    server.get('/api/workers/:id/accounts', setProfileToWorker,authenticate, getAccount); 
 
     // post a request for worker to logout
-    server.post('/api/workers/:id/logout', authenticate, logout); 
-    
+    server.post('/api/workers/:id/logout', setProfileToWorker, authenticate, logout); 
+
     // delete a worker profile
     server.delete('/api/workers/:id/delete', deleteWorker);
 
