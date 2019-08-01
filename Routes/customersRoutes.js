@@ -19,10 +19,10 @@ module.exports = server => {
     server.get('/api/customers/:id/payments', setProfileToCustomer, authenticate, getPaymentsHistory); 
 
     // post a request for customer to logout
-    server.post('/api/customers/:id/logout', setProfileToCustomer, authenticate, logout); 
+    server.post('/api/customers/:id/logout', setProfileToCustomer, authenticate, logout);
 
-    // delete a customer profile
-    server.delete('/api/customers/:id/delete', deleteCustomer);
+    // post a payment for a customer
+    server.post('/api/customers/:id/payments', setProfileToCustomer, createPayment); 
 };
 
 // workers registration 
@@ -154,6 +154,24 @@ async function logout (req, res){
     }
 }
 
-async function deleteCustomer (req, res) {
-
+// insert payment for a customer
+async function createPayment (req, res) {
+    const { account_id, amount } = req.body;
+    const customerPayment = {
+        customer_id: req.params.id,
+        account_id,
+        amount,
+    }
+    try {
+        const paymentsHistory = await Customers.createPayment(customerPayment);
+        const customerData = await Customers.findById(customerPayment.customer_id);
+        // we send back the full stack info
+        customerData[0].payments_history = paymentsHistory;
+        res.status(200).json(customerData);
+    } catch (error) {
+        const err = {
+            message: error.message,
+        };
+        res.status(500).json(err);
+    }
 }
