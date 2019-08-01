@@ -7,14 +7,19 @@ const { authenticate } = require('../utils/authenticate');
 module.exports = server => {
     // register a new worker
     server.post('/api/workers', register); 
+
     // workers login
     server.post('/api/workers/login', login); 
+
     // get all workers from the DB
     server.get('/api/workers', getWorkers); 
+
     // get a worker account info including payments history
     server.get('/api/workers/:id/accounts', authenticate, getAccount); 
+
     // post a request for worker to logout
     server.post('/api/workers/:id/logout', authenticate, logout); 
+    
     // delete a worker profile
     server.delete('/api/workers/:id/delete', deleteWorker);
 
