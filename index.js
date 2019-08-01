@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 // the actual file that load the server
 const server = require('./server');
 // listning port from current environement or 

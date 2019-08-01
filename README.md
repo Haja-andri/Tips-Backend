@@ -429,9 +429,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJ1c2VybmFtZSI6InRpdGlAZW1
 The response will have the general worker info along with his newly created account details.
 
 ```
-	{ 
-		message: 'Your profile has been deleted' 
-	}
+{ 
+	message: 'Your profile has been deleted' 
+}
 ```
 
 **In case of error,**
