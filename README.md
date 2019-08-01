@@ -321,9 +321,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJ1c2VybmFtZSI6InRpdGlAZW1
 The response will have the general worker info along with his account details. A payments histoty is also sent with the response, so worker can track back their tips history
 
 ```
-    {
-		"See you next time Tata Zaz"
-	}
+{
+	message: "See you next time Tata Zaz"
+}
 ```
 
 **In case of error,**
@@ -429,7 +429,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJ1c2VybmFtZSI6InRpdGlAZW1
 The response will have the general worker info along with his newly created account details.
 
 ```
-	"Your profile has been deleted"
+	{ 
+		message: 'Your profile has been deleted' 
+	}
 ```
 
 **In case of error,**

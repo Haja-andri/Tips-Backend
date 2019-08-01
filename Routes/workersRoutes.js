@@ -143,7 +143,7 @@ async function logout (req, res){
     try {
         await Workers.removeWorkerToken(workerId);
         const workerData = await Workers.findById(workerId);
-        res.status(200).json(`See you next time ${workerData[0].name} ${workerData[0].first_name}`)
+        res.status(200).json({ message: `See you next time ${workerData[0].name} ${workerData[0].first_name}`})
     } catch (error) {
         const err = {
             message: error.message,
@@ -166,7 +166,7 @@ async function deleteWorker (req, res) {
             else{
                 // delete the worker cascaded down to associated account (if any)
                 await Workers.deleteWorker(workerId);
-                res.status(200).json('Your profile has been deleted')
+                res.status(200).json({ message: 'Your profile has been deleted' })
             }
         }
         else res.status(401).json({error: 'could not find the worker'});
