@@ -82,7 +82,6 @@ function login (req, res) {
     Customers.findByFilter({email: username})
     .first()
     .then( async (customer) =>{
-        console.log(password, customer.password)
         // since customer subsciption is optional
         // the customer may not have a password set yet
         // in that case he must subscribe first
