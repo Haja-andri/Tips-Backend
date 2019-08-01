@@ -1,4 +1,4 @@
-# <p align="center" style="color: green" size="40"> TripsEase Backend </p>
+# <p align="center" style="color: green" size="40"> TipsEase Backend </p>
 
 **What problem does this app solve?**
 Service workers often face challenges to collect tips from customers. And keeping track and sharing tips amongst colleagues can be overwhelming.
@@ -36,7 +36,9 @@ Help service workers to focuse on providing the greatest service possible withou
 
 # The API
 
-This is the back-end for the TipsEase, which is part of Lambda School Build Week Project.
+This is the back-end for the TipsEase project as part of the Lambda Build Week #4 WEBEU2. Following is the detailed documentations to consume the API from the client side.
+
+# The Data model and schema
 
 <p align="center">
   <img src="schema_small.png" width="700" alt="TipsEase data model">
@@ -44,7 +46,7 @@ This is the back-end for the TipsEase, which is part of Lambda School Build Week
 
 # Instructions
 
-All API requests are made to: **_ https://kitchen-soup-backend.herokuapp.com _**
+All API requests are made to: **_ https://tips-ease-lambda-build-week.herokuapp.com _**
 
 ## REGISTER (POST) Worker
 
@@ -228,7 +230,7 @@ a **GET** request to _/api/workers/:id/accounts_ will will extract the worker ID
 
 Please note that this end-point is **Procted** by an authentication process setup in the middleware. Therefore the worker must be logged in first and the obtained token attached with this request in the header. **An additional level of security** is set to make sure that the token provided in this request belong to to the current worker
 
-**The object template to be sent in the request body is the following :**
+**The data template to be sent in the request header is the following :**
 
 ```
 **Key**
@@ -307,7 +309,7 @@ No token provided
 
 A **POST** request to _/api/workers/:id/logout_  will remove all access to protected routes for the worker. The worker can logout only if he his already logged in. Therefore an authorization in the header is alsoe required
 
-**The object template to be sent in the request body is the following :**
+**The data template to be sent in the request header is the following :**
 
 ```
 **Key**
@@ -413,9 +415,9 @@ DB Constaints triggered
 
 A **DELETE** request to _/api/workers/:id/delete_  will remove the worker with the ID passed in the parameters from the database. This route is protected by the authentication middleware. 
 
-**An additional security** is set to prevent worker to delete their profile while their account balance not zeroed (>0).
+**An additional security** is set to prevent worker from deleting their profile while their account balance is not zeroed (>0).
 
-**The object template to be sent in the request body is the following :**
+**The data template to be sent in the request header is the following :**
 
 ```
 **Key**
