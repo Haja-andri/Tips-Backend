@@ -11,7 +11,7 @@ Service workers can at any point of time, sign-up to the portal, create a profil
 
 
 **What is the mission statement**
-Help service workers to focuse on providing the greatest service possible without worrying about tips collections 
+Help service workers to focuse on providing the greatest service possible without worrying about tips collections and awkward situation.
 
 **What features are required for your minimum viable product**
 	* Service workers can sign-up on the platform, then create a profile with his service and financial information to receive the funds tips to them
