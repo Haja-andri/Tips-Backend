@@ -4,6 +4,7 @@
   "description": "Lambda Build week #3",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "server": "nodemon index.js",
     "test": "cross-env DB_ENV=testing jest --watch --verbose"
   },
