@@ -37,14 +37,13 @@ Target Audience
 	* Service workers at restaurents
 	* Restaurants customers  
 
-
-<p align="center">
-  <img src="soup.png" width="190" alt="I'll serve soup">
-</p>
-
-# About
+# The API
 
 This is the back-end for the I'll serve soup, which is part of Lambda School Build Week Project.
+
+<p align="center">
+  <img src="https://drive.google.com/file/d/1gtSFrC1ZVoHHn4-J1GR1vNxDDVG3ky-Q/view?usp=sharing" width="190" alt="TipsEase">
+</p>
 
 # Instructions
 
