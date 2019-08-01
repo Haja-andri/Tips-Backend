@@ -1,4 +1,4 @@
-## Proposal
+# <p align="center" style="color: green" size="40"> TripsEase Backend</p>
 
 # What problem does this app solve?
 Service workers often face challenges collecting tips from customers. Keeping track and sharing amongst colleagues can be overwhelming.
@@ -30,9 +30,6 @@ Frameworks - Libraries
 
 # What 3rd party frameworks/libraries are you considering using?
 	* ExpressJS, Knex, Jest, SQLite, Stripe API
-# Do APIs require you to contact its maintainer to gain access?
-# Are you required to pay to use the API?
-	* Sandbox if probably free to use
 
 Target Audience
 
@@ -40,7 +37,6 @@ Target Audience
 	* Service workers at restaurents
 	* Restaurants customers  
 
-# <p align="center" style="color: green" size="40"> I'll Serve Soup Backend</p>
 
 <p align="center">
   <img src="soup.png" width="190" alt="I'll serve soup">
