@@ -1,4 +1,4 @@
-# Proposal
+## Proposal
 
 # What problem does this app solve?
 Service workers often face challenges collecting tips from customers. Keeping track and sharing amongst colleagues can be overwhelming.
@@ -39,3 +39,79 @@ Target Audience
 # Who is the target audience?
 	* Service workers at restaurents
 	* Restaurants customers  
+
+# <p align="center" style="color: green" size="40"> I'll Serve Soup Backend</p>
+
+<p align="center">
+  <img src="soup.png" width="190" alt="I'll serve soup">
+</p>
+
+# About
+
+This is the back-end for the I'll serve soup, which is part of Lambda School Build Week Project.
+
+# Instructions
+
+All API requests are made to: **_ https://kitchen-soup-backend.herokuapp.com _**
+
+This api is using **https://sendgrid.com/** for sending emails.
+
+If a Item amount is 0 the API will automatically send a messege to supplier with a messege
+
+```
+  to: 'supplier@example.com',
+  from: 'currentUser@example.com',
+  subject: 'Bananas out of stock',
+  text: 'Need more Bananas!!',
+```
+
+## REGISTER (POST) User
+
+a **POST** request to _/api/users/register_ will create a new user and return an object
+
+`email must be in the form: anystring@anystring.anystring`
+
+if not server will respond with :
+
+```
+{
+    "message": "Please provide correct email for the user. Ex: anystring@anystring.anystring"
+}
+```
+
+Form will need `name` , `password` , `email` and `role` that are require for registration a user
+URL: /api/users/register
+
+Example data:
+
+```
+{
+    "name":"Sorin",
+    "password":"123",
+    "email":"sorin@yahoo.com",
+    "role":"manager"
+}
+
+```
+
+If posted succesfully, will return a object with message:
+
+```
+
+{
+    "id": 5,
+    "email": "sorin@yahoo.com",
+    "message": "User: Sorin was registered succesfully"
+}
+
+```
+
+If require field are not preset it will return a object with message:
+
+```
+
+{
+    "message": "please provide name, password email and role for the user"
+}
+
+```
