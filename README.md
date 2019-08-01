@@ -50,7 +50,7 @@ All API requests are made to: **_ https://kitchen-soup-backend.herokuapp.com _**
 
 a **POST** request to _/api/workers_ will create a new worker and return an object array of object.
 
-The following data are the data type and table constraints 
+**The following data are the data type and table constraints** 
 ```
 	workers.increments(); // incremental unique ID
 	workers.string('name', 128).notNullable();
@@ -64,7 +64,7 @@ The following data are the data type and table constraints
 	workers.date('password', 128).notNullable();
 ```
 
-The object template to be sent in the request body is the following :
+**The object template to be sent in the request body is the following :**
 
 ```
 {
@@ -80,7 +80,7 @@ The object template to be sent in the request body is the following :
 }
 ```
 
-The response output
+**The response output**
 
 
 ```
@@ -100,7 +100,7 @@ The response output
 ]
 ```
 
-Incase of error, a proper code error will be sent back along with the error message
+**In case of error, a proper code error will be sent back along with the error message**
 
 ```
 
