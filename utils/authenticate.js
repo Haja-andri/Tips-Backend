@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
 const Workers = require('../data/models/workersModel')
+const Customers = require('../data/models/customersModel')
 
 const jwtKey = process.env.SALT;
 
 // quickly see what this file exports
 module.exports = {
     authenticate,
+    setProfileToCustomer
 };
 
 // Function used by protected endpoints before procession futher
@@ -20,9 +22,15 @@ function authenticate(req, res, next) {
             });
         } 
         req.decoded = decoded;
-        // if the token is valid, we also make sure it matches the current worker entry 
-        // in the workers_token db to prevent workers using others workers token
-        const alreadyAToken = await Workers.findTokenByWorkerId(req.params.id);
+        // if the token is valid, we also make sure it matches the current user entry 
+        // in the db to prevent workers using other users token
+        let alreadyAToken = [];
+        if(req.profile === 'customer') {
+            alreadyAToken = await Customers.findTokenByCustomerId(req.params.id);
+        }
+        else {
+            alreadyAToken = await Workers.findTokenByWorkerId(req.params.id);
+        } 
         if(alreadyAToken.length > 0 && token === alreadyAToken[0].token){
             // the only happy path as the received token matches with the recorded token in the db
             next();
@@ -38,4 +46,9 @@ function authenticate(req, res, next) {
             error: 'This access is protected, you must login before',
         });
     }
+}
+
+function setProfileToCustomer (req, res, next){
+    req.profile = 'customer';
+    next();
 }

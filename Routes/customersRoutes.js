@@ -2,7 +2,7 @@ const Customers = require('../data/models/customersModel');
 const bcrypt = require('bcrypt');
 const token = require('../utils/token');
 
-const { authenticate } = require('../utils/authenticate');
+const { setProfileToCustomer, authenticate } = require('../utils/authenticate');
 
 module.exports = server => {
     // register a new customer (password optional)
@@ -16,7 +16,7 @@ module.exports = server => {
     server.post('/api/customers/login', login); 
 
     // get a customer payments history
-    server.get('/api/customers/:id/payments', authenticate, getPaymentsHistory); 
+    server.get('/api/customers/:id/payments', setProfileToCustomer, authenticate, getPaymentsHistory); 
 
     // post a request for customer to logout
     server.post('/api/customers/:id/logout', authenticate, logout); 
@@ -124,7 +124,20 @@ function login (req, res) {
 
 // get the payments history that belong to a customer
 async function getPaymentsHistory(req, res) {
-    
+    const customerId = req.params.id
+    try {
+        //first we get the customer info
+        const customerData = await Customers.findById(customerId);
+        // then we merge in the payments history
+        const paymentsHistory = await Customers.getPaymentsHistory(customerId);
+        customerData[0].payments_history = paymentsHistory;
+        res.status(200).json({customerData})
+    } catch (error) {
+        const err = {
+            message: error.message,
+        };
+            res.status(500).json(err);
+    }    
 }
 
 async function logout (req, res){

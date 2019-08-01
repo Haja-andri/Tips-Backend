@@ -7,7 +7,8 @@ module.exports = {
     findByFilter,
     findTokenByCustomerId,
     updateCustomerToken,
-    insertCustomerToken
+    insertCustomerToken,
+    getPaymentsHistory
 };
 
 async function add(customers) {
@@ -34,9 +35,13 @@ function findTokenByCustomerId(id) {
 }
 
 async function updateCustomerToken(updatedToken){
-    return await db('customers_token').update('token', updatedToken.token).where('customers_id', updatedToken.customer_id )
+    return await db('customers_token').update('token', updatedToken.token).where('customer_id', updatedToken.customer_id )
 }
 
 async function insertCustomerToken(token){
     return await db('customers_token').insert(token)
+}
+
+async function getPaymentsHistory(customerId){
+    return await db('payments').select('amount', 'created_at').where('payments.id', customerId);
 }
