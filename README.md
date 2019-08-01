@@ -355,6 +355,23 @@ No token provided
 
 A **POST** request to _/api/workers/:id/accounts_  will create an account for the worker with the ID passed in the paramter. The worker must be logged in first as this is a protected route
 
+**Data type and table constraints**
+
+```
+accounts.increments();
+accounts.integer('worker_id').notNullable() // foreign key to workers table
+	.unsigned()
+	.references('id')
+	.inTable('workers')
+	// the worker_id refering to workers table must be unique in 
+	// account to prevent having multiple account for a single worker
+	.unique() 
+	.onDelete('CASCADE')
+	.onUpdate('CASCADE');
+accounts.string('iban', 128).notNullable().unique();
+accounts.string('balance', 128).notNullable();
+```
+
 **The object template to be sent in the request body is the following :**
 
 ```
