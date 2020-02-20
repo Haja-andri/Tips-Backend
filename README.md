@@ -46,8 +46,6 @@ This is the back-end for the TipsEase project as part of the Lambda Build Week #
 
 # Instructions
 
-All API requests are made to: **_ https://tips-ease-lambda-build-week.herokuapp.com _**
-
 ## REGISTER (POST) Worker
 
 a **POST** request to _/api/workers_ will create a new worker and return an object array of object.
