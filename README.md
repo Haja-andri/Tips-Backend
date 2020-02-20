@@ -1,4 +1,4 @@
-# <p align="center" style="color: green" size="40"> TipsEase Backend </p>
+# <p align="center" style="color: green" size="40"> Tips Backend </p>
 
 **What problem does this app solve?**
 Service workers often face challenges to collect tips from customers. And keeping track and sharing tips amongst colleagues can be overwhelming.
